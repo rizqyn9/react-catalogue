@@ -7,7 +7,7 @@ import './style/main.css'
 
 ReactDOM.render(
     <React.StrictMode>
-        <div className="bg-green-50">
+        <div className="bg-green-50 min-h-screen">
             <App />
         </div>
     </React.StrictMode>,

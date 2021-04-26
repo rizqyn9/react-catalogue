@@ -1,58 +1,28 @@
-import React from 'react'
+import axios from 'axios'
+import React, {useState, useEffect} from 'react'
 import Products from './Products'
 
 const ProductList = (props) => {
     const {admin} = props
-    const dummy = [
-        {
-            Title:"Title1",
-            Desc : "Loremasdhasd",
-            Image : '1.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "LoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkasLoremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '2.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "Loremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '3.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "Loremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '4.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "Loremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '4.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "Loremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '4.png',
-            Category : [1,2,3,4,5]
-        },
-        {
-            Title:"Title2",
-            Desc : "Loremasdhasdasdjahjsdjnjasdnjkas",
-            Image : '4.png',
-            Category : [1,2,3,4,5]
-        },
-    ]
+    const [products , setProducts] = useState([])
+    const [load, setLoad] = useState(true)
+    useEffect(() => {
+        axios.get('http://localhost:3005/catalogue')
+        .then(res => {
+            console.log(res.data);
+            setProducts(res.data)
+            setLoad(false)
+        })
+    },[])
+    
     return (
         <div className="flex flex-wrap justify-center">
             {
-                dummy.map(el => {
-                    return <Products Title={el.Title} Desc={el.Desc} Image={el.Image} Category={el.Category} Test={typeof el.Category}/>
-                })
+                !load ? (
+                    products.map(el => {
+                        return <Products Title={el.Nama_Barang} Desc={el.Desc} Image={el.Images} Category={el.Category} Properties={el.Properties} Admin={admin}/>
+                    })
+                ) : null
             }
         </div>
     )
